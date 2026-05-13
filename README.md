@@ -1,4 +1,4 @@
-# Frutería Fresh 🍊
+# Frutería Fresh 🍊aaa
 
 Proyecto demo de una tienda online de frutas, construida con **HTML + CSS + JavaScript puro** (sin frameworks, sin build tools).
 
