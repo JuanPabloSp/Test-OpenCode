@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Frutería Fresh - Las mejores frutas frescas directa de origen. Compra fruta de temporada con envío a domicilio.">
+    <meta name="keywords" content="frutas, frutería, frutas frescas, comprar fruta, fruta online">
+    <meta name="author" content="Frutería Fresh">
+    <meta name="theme-color" content="#2d5a27">
+    <meta property="og:title" content="Frutería Fresh | Frutas Frescas">
+    <meta property="og:description" content="Las mejores frutas frescas directo del campo a tu mesa.">
+    <meta property="og:type" content="website">
+    <title>Frutería Fresh | Frutas Frescas</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="#inicio" class="logo">Frutería Fresh</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="cart-btn" id="cartBtn" aria-label="Carrito">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </button>
+                <button class="auth-btn" id="authBtn">Iniciar Sesión</button>
+                <button class="orders-btn" id="ordersBtn">Mis Pedidos</button>
+                <button class="theme-btn" id="themeBtn" aria-label="Cambiar tema">
+                    <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                    <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+                <button class="menu-toggle" id="menuToggle" aria-label="Menú">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="inicio" class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Frutas Frescas<br>Directo del Campo</h1>
+                <p class="hero-text">Calidad premium cada día</p>
+                <a href="#productos" class="btn-primary">Ver Productos</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=800&q=80" alt="Frutas frescas" loading="eager">
+            </div>
+        </section>
+
+        <section id="productos" class="products">
+            <h2 class="section-title">Nuestros Productos</h2>
+            <div class="products-toolbar">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Buscar fruta..." aria-label="Buscar productos">
+                    <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                </div>
+                <div class="filter-buttons" id="filterButtons" role="tablist" aria-label="Filtrar por categoría">
+                    <button class="filter-btn active" data-category="all" role="tab" aria-selected="true">Todas</button>
+                    <button class="filter-btn" data-category="cítricos" role="tab">Cítricos</button>
+                    <button class="filter-btn" data-category="tropicales" role="tab">Tropicales</button>
+                    <button class="filter-btn" data-category="bayas" role="tab">Bayas</button>
+                    <button class="filter-btn" data-category="pomáceas" role="tab">Pomáceas</button>
+                    <button class="filter-btn" data-category="drupáceas" role="tab">Drupáceas</button>
+                    <button class="filter-btn" data-category="melones" role="tab">Melones</button>
+                    <button class="filter-btn" data-category="exóticas" role="tab">Exóticas</button>
+                    <button class="filter-btn" data-category="favoritos" role="tab">♥ Favoritos</button>
+                </div>
+                <div class="sort-box">
+                    <label for="sortSelect" class="sort-label">Ordenar:</label>
+                    <select id="sortSelect">
+                        <option value="default">Por defecto</option>
+                        <option value="price-asc">Menor precio</option>
+                        <option value="price-desc">Mayor precio</option>
+                        <option value="name">Nombre A-Z</option>
+                    </select>
+                </div>
+            </div>
+            <div class="products-grid" id="productsGrid"></div>
+        </section>
+
+        <script id="productsData" type="application/json">[
+            {"id":1,"name":"Naranja","price":10.90,"category":"cítricos","image":"https://images.unsplash.com/photo-1547514701-42782101795e?w=400&q=80","alt":"Naranja"},
+            {"id":2,"name":"Limón","price":8.90,"category":"cítricos","image":"https://images.unsplash.com/photo-1615737005632-21755eed35e1?w=400&q=80","alt":"Limón"},
+            {"id":3,"name":"Lima","price":9.90,"category":"cítricos","image":"https://images.unsplash.com/photo-1581340752304-a781f821e8ce?w=400&q=80","alt":"Lima"},
+            {"id":4,"name":"Pomelo","price":12.90,"category":"cítricos","image":"https://images.unsplash.com/photo-1622912789333-ba8bf8242e27?w=400&q=80","alt":"Pomelo"},
+            {"id":5,"name":"Mandarina","price":10.90,"category":"cítricos","image":"https://images.unsplash.com/photo-1631148601579-9e20bf28ab59?w=400&q=80","alt":"Mandarina"},
+            {"id":6,"name":"Tangerina","price":11.90,"category":"cítricos","image":"https://images.unsplash.com/photo-1653192646532-9d7217df704c?w=400&q=80","alt":"Tangerina"},
+            {"id":7,"name":"Kumquat","price":22.90,"category":"cítricos","image":"https://images.unsplash.com/photo-1519966283370-ba7869cd01ac?w=400&q=80","alt":"Kumquat"},
+            {"id":8,"name":"Bergamota","price":20.90,"category":"cítricos","image":"https://images.unsplash.com/photo-1561003898-c2749bc2f541?w=400&q=80","alt":"Bergamota"},
+            {"id":9,"name":"Yuzu","price":28.90,"category":"cítricos","image":"https://images.unsplash.com/photo-1596806031947-6113089ee827?w=400&q=80","alt":"Yuzu"},
+            {"id":10,"name":"Plátano","price":8.90,"category":"tropicales","image":"https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400&q=80","alt":"Plátano"},
+            {"id":11,"name":"Mango","price":14.90,"category":"tropicales","image":"https://images.unsplash.com/photo-1553279768-865429fa0078?w=400&q=80","alt":"Mango"},
+            {"id":12,"name":"Piña","price":22.90,"category":"tropicales","image":"https://images.unsplash.com/photo-1550258987-190a2a41a8ba?w=400&q=80","alt":"Piña"},
+            {"id":13,"name":"Kiwi","price":15.90,"category":"tropicales","image":"https://images.unsplash.com/photo-1585059895524-723f3f33e6a6?w=400&q=80","alt":"Kiwi"},
+            {"id":14,"name":"Papaya","price":11.90,"category":"tropicales","image":"https://images.unsplash.com/photo-1544866092-1935d5ef3fa2?w=400&q=80","alt":"Papaya"},
+            {"id":15,"name":"Coco","price":19.90,"category":"tropicales","image":"https://images.unsplash.com/photo-1551232864-3f0890e580d9?w=400&q=80","alt":"Coco"},
+            {"id":16,"name":"Maracuyá","price":25.90,"category":"tropicales","image":"https://images.unsplash.com/photo-1637019449619-37ea52b9a699?w=400&q=80","alt":"Maracuyá"},
+            {"id":17,"name":"Guayaba","price":16.90,"category":"tropicales","image":"https://images.unsplash.com/photo-1758614027662-dfec17b78027?w=400&q=80","alt":"Guayaba"},
+            {"id":18,"name":"Lichi","price":27.90,"category":"tropicales","image":"https://images.unsplash.com/photo-1749947715360-2493643cbd7b?w=400&q=80","alt":"Lichi"},
+            {"id":19,"name":"Tamarindo","price":14.90,"category":"tropicales","image":"https://images.unsplash.com/photo-1771229389277-a0a7546913f9?w=400&q=80","alt":"Tamarindo"},
+            {"id":20,"name":"Guanábana","price":18.90,"category":"tropicales","image":"https://images.unsplash.com/photo-1752619828506-6cd386676d9d?w=400&q=80","alt":"Guanábana"},
+            {"id":21,"name":"Chirimoya","price":20.90,"category":"tropicales","image":"https://images.unsplash.com/photo-1564849827938-7bbc8260293e?w=400&q=80","alt":"Chirimoya"},
+            {"id":22,"name":"Rambután","price":31.90,"category":"tropicales","image":"https://images.unsplash.com/photo-1565352429984-667fd77ed8ae?w=400&q=80","alt":"Rambután"},
+            {"id":23,"name":"Longan","price":26.90,"category":"tropicales","image":"https://images.unsplash.com/photo-1755971103541-402280c3befc?w=400&q=80","alt":"Longan"},
+            {"id":24,"name":"Feijoa","price":25.90,"category":"tropicales","image":"https://images.unsplash.com/photo-1541857754-557a44522bec?w=400&q=80","alt":"Feijoa"},
+            {"id":25,"name":"Fresas","price":18.90,"category":"bayas","image":"https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=400&q=80","alt":"Fresas"},
+            {"id":26,"name":"Uvas","price":16.90,"category":"bayas","image":"https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=400&q=80","alt":"Uvas"},
+            {"id":27,"name":"Arándanos","price":22.90,"category":"bayas","image":"https://images.unsplash.com/photo-1717294537554-e4e6c17e215a?w=400&q=80","alt":"Arándanos"},
+            {"id":28,"name":"Frambuesas","price":24.90,"category":"bayas","image":"https://images.unsplash.com/photo-1620417995551-8400ec98b459?w=400&q=80","alt":"Frambuesas"},
+            {"id":29,"name":"Moras","price":20.90,"category":"bayas","image":"https://images.unsplash.com/photo-1474480109237-15a7ca8f0685?w=400&q=80","alt":"Moras"},
+            {"id":30,"name":"Grosellas","price":21.90,"category":"bayas","image":"https://images.unsplash.com/photo-1751474860949-a6ea4a680732?w=400&q=80","alt":"Grosellas"},
+            {"id":31,"name":"Cerezas","price":26.90,"category":"bayas","image":"https://images.unsplash.com/photo-1750100672254-419589a1c9ca?w=400&q=80","alt":"Cerezas"},
+            {"id":32,"name":"Arándanos Rojos","price":19.90,"category":"bayas","image":"https://images.unsplash.com/photo-1586811124490-4f2272df2670?w=400&q=80","alt":"Arándanos rojos"},
+            {"id":33,"name":"Saúco","price":17.90,"category":"bayas","image":"https://images.unsplash.com/photo-1755245429320-91d64e66c3a8?w=400&q=80","alt":"Saúco"},
+            {"id":34,"name":"Bayas de Goji","price":28.90,"category":"bayas","image":"https://images.unsplash.com/photo-1685130046213-ea4d7d9e2267?w=400&q=80","alt":"Bayas de Goji"},
+            {"id":35,"name":"Manzana Roja","price":12.90,"category":"pomáceas","image":"https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400&q=80","alt":"Manzana roja"},
+            {"id":36,"name":"Manzana Verde","price":11.90,"category":"pomáceas","image":"https://images.unsplash.com/photo-1661601876847-a24a1d99eb90?w=400&q=80","alt":"Manzana verde"},
+            {"id":37,"name":"Pera","price":13.90,"category":"pomáceas","image":"https://images.unsplash.com/photo-1550828554-30b375bca03b?w=400&q=80","alt":"Pera"},
+            {"id":38,"name":"Membrillo","price":15.90,"category":"pomáceas","image":"https://images.unsplash.com/photo-1573841261518-bc164773c66d?w=400&q=80","alt":"Membrillo"},
+            {"id":39,"name":"Níspero","price":17.90,"category":"pomáceas","image":"https://images.unsplash.com/photo-1756670969561-3784e3a467f0?w=400&q=80","alt":"Níspero"},
+            {"id":40,"name":"Durazno","price":17.90,"category":"drupáceas","image":"https://images.unsplash.com/photo-1602813812581-0713dae489da?w=400&q=80","alt":"Durazno"},
+            {"id":41,"name":"Ciruela","price":15.90,"category":"drupáceas","image":"https://images.unsplash.com/photo-1534084662352-f0e27788f302?w=400&q=80","alt":"Ciruela"},
+            {"id":42,"name":"Albaricoque","price":19.90,"category":"drupáceas","image":"https://images.unsplash.com/photo-1595412017587-b7f3117dff54?w=400&q=80","alt":"Albaricoque"},
+            {"id":43,"name":"Nectarina","price":18.90,"category":"drupáceas","image":"https://images.unsplash.com/photo-1504577089374-ed8ee92673bb?w=400&q=80","alt":"Nectarina"},
+            {"id":44,"name":"Melocotón","price":17.90,"category":"drupáceas","image":"https://images.unsplash.com/photo-1602813812581-0713dae489da?w=400&q=80","alt":"Melocotón"},
+            {"id":45,"name":"Sandía","price":6.90,"category":"melones","image":"https://images.unsplash.com/photo-1589985270826-4b7c1351814d?w=400&q=80","alt":"Sandía"},
+            {"id":46,"name":"Melón","price":9.90,"category":"melones","image":"https://images.unsplash.com/photo-1571757767114-0197610fc0d2?w=400&q=80","alt":"Melón"},
+            {"id":47,"name":"Melón Galia","price":10.90,"category":"melones","image":"https://images.unsplash.com/photo-1571575173700-afb9492e6a50?w=400&q=80","alt":"Melón Galia"},
+            {"id":48,"name":"Melón Cantalupo","price":11.90,"category":"melones","image":"https://images.unsplash.com/photo-1753623712577-02fba3386670?w=400&q=80","alt":"Melón Cantalupo"},
+            {"id":49,"name":"Melón Honeydew","price":11.90,"category":"melones","image":"https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=400&q=80","alt":"Melón Honeydew"},
+            {"id":50,"name":"Higo","price":23.90,"category":"exóticas","image":"https://images.unsplash.com/photo-1506851141243-46bb87f2576c?w=400&q=80","alt":"Higo"},
+            {"id":51,"name":"Granada","price":21.90,"category":"exóticas","image":"https://images.unsplash.com/photo-1610089252634-524dc46013be?w=400&q=80","alt":"Granada"},
+            {"id":52,"name":"Dátil","price":24.90,"category":"exóticas","image":"https://images.unsplash.com/photo-1629738601425-494c3d6ba3e2?w=400&q=80","alt":"Dátil"},
+            {"id":53,"name":"Pitahaya","price":29.90,"category":"exóticas","image":"https://images.unsplash.com/photo-1684894096710-758223608dd5?w=400&q=80","alt":"Pitahaya"},
+            {"id":54,"name":"Carambola","price":19.90,"category":"exóticas","image":"https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?w=400&q=80","alt":"Carambola"},
+            {"id":55,"name":"Caqui","price":16.90,"category":"exóticas","image":"https://images.unsplash.com/photo-1697434467948-50f3d674dee1?w=400&q=80","alt":"Caqui"},
+            {"id":56,"name":"Mangostán","price":34.90,"category":"exóticas","image":"https://images.unsplash.com/photo-1590505748614-a5eb52d0fafe?w=400&q=80","alt":"Mangostán"},
+            {"id":57,"name":"Acerola","price":23.90,"category":"exóticas","image":"https://images.unsplash.com/photo-1707932700096-db113d55a026?w=400&q=80","alt":"Acerola"},
+            {"id":58,"name":"Zapote","price":21.90,"category":"exóticas","image":"https://images.unsplash.com/photo-1515446134809-993c501ca304?w=400&q=80","alt":"Zapote"},
+            {"id":59,"name":"Kiwano","price":32.90,"category":"exóticas","image":"https://images.unsplash.com/photo-1601478424553-59be2437683a?w=400&q=80","alt":"Kiwano"}
+        ]</script>
+
+        <section id="contacto" class="contact">
+            <h2 class="section-title">Contáctanos</h2>
+            <div class="contact-container">
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Nombre</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Mensaje</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">Enviar</button>
+                </form>
+                <div class="contact-info">
+                    <div class="info-item">
+                        <h4>Dirección</h4>
+                        <p>Calle Principal 123, Ciudad</p>
+                    </div>
+                    <div class="info-item">
+                        <h4>Horario</h4>
+                        <p>Lun-Sáb: 8:00 - 20:00</p>
+                    </div>
+                    <div class="info-item">
+                        <h4>Teléfono</h4>
+                        <p>+34 123 456 789</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Frutería Fresh</h4>
+                <p>Las mejores frutas frescas directo del campo a tu mesa.</p>
+            </div>
+            <div class="footer-section newsletter-section">
+                <h4>Suscríbete</h4>
+                <p>Recibe ofertas y novedades</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" id="newsletterEmail" placeholder="Tu email" required aria-label="Email para newsletter">
+                    <button type="submit">Suscribir</button>
+                </form>
+                <span id="newsletterMsg"></span>
+            </div>
+            <div class="footer-section">
+                <h4>Enlaces</h4>
+                <a href="#inicio">Inicio</a>
+                <a href="#productos">Productos</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Frutería Fresh. Todos los derechos reservados.</p>
+            <div class="social-links">
+                <a href="#" aria-label="Instagram">Instagram</a>
+                <a href="#" aria-label="Facebook">Facebook</a>
+                <a href="#" aria-label="Twitter">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>Tu Carrito</h2>
+            <button class="cart-close" id="cartClose">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p class="cart-empty">Tu carrito está vacío</p>
+        </div>
+        <div class="cart-footer" id="cartFooter">
+            <div class="coupon-box">
+                <input type="text" id="couponInput" placeholder="Cupón de descuento" aria-label="Código de cupón">
+                <button id="couponApplyBtn">Aplicar</button>
+                <span id="couponMsg"></span>
+            </div>
+            <div class="cart-total">
+                <span>Total</span>
+                <span class="total-price" id="totalPrice">$0.00</span>
+            </div>
+            <button class="btn-primary checkout-btn" id="checkoutBtn">Finalizar Compra</button>
+            <button class="btn-clear" id="clearCartBtn">Vaciar Carrito</button>
+        </div>
+    </div>
+
+    <div class="auth-overlay" id="authOverlay"></div>
+    <div class="auth-modal" id="authModal">
+        <div class="auth-tabs">
+            <button class="auth-tab active" data-tab="login">Iniciar Sesión</button>
+            <button class="auth-tab" data-tab="register">Registrarse</button>
+        </div>
+        <form class="auth-form active" id="loginForm">
+            <div class="form-group">
+                <label for="loginEmail">Email</label>
+                <input type="email" id="loginEmail" required>
+            </div>
+            <div class="form-group">
+                <label for="loginPass">Contraseña</label>
+                <input type="password" id="loginPass" required>
+            </div>
+            <button type="submit" class="btn-primary">Iniciar Sesión</button>
+        </form>
+        <form class="auth-form" id="registerForm">
+            <div class="form-group">
+                <label for="regName">Nombre</label>
+                <input type="text" id="regName" required>
+            </div>
+            <div class="form-group">
+                <label for="regEmail">Email</label>
+                <input type="email" id="regEmail" required>
+            </div>
+            <div class="form-group">
+                <label for="regPass">Contraseña</label>
+                <input type="password" id="regPass" required>
+            </div>
+            <button type="submit" class="btn-primary">Registrarse</button>
+        </form>
+        <button class="auth-close" id="authClose">&times;</button>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <div class="loader-overlay" id="loader">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="product-modal-overlay" id="productModalOverlay"></div>
+    <div class="product-modal" id="productModal">
+        <button class="product-modal-close" id="productModalClose">&times;</button>
+        <div class="product-modal-content" id="productModalContent"></div>
+    </div>
+
+    <div class="orders-overlay" id="ordersOverlay"></div>
+    <div class="orders-modal" id="ordersModal">
+        <div class="orders-header">
+            <h2>Mis Pedidos</h2>
+            <button class="orders-close" id="ordersClose">&times;</button>
+        </div>
+        <div class="orders-body" id="ordersBody">
+            <p class="orders-empty">No tienes pedidos aún</p>
+        </div>
+    </div>
+
+    <button class="back-to-top" id="backToTop" aria-label="Volver arriba">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html>
