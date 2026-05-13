@@ -1291,6 +1291,26 @@ body:not(.dark) .moon-icon { display: none; }
     font-size: 1rem;
 }
 
+.share-btn {
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    background: transparent;
+    color: var(--color-text-light);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: inherit;
+}
+
+.share-btn:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
 .back-to-top {
     position: fixed;
     bottom: 1.5rem;
@@ -1560,7 +1580,7 @@ select:focus-visible {
 @media print {
     .header, .footer, .back-to-top, .cart-btn, .auth-btn, .orders-btn,
     .theme-btn, .menu-toggle, .filter-buttons, .search-box, .sort-box,
-    .btn-add, .qty-selector, .fav-btn, .quick-view-overlay,
+    .btn-add, .qty-selector, .fav-btn, .quick-view-overlay, .share-btn,
     .cart-overlay, .cart-sidebar, .auth-modal, .auth-overlay,
     .orders-modal, .orders-overlay, .product-modal, .product-modal-overlay,
     .toast-container, .loader-overlay, .newsletter-form, #newsletterMsg,

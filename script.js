@@ -498,6 +498,7 @@ function openProductModal(id) {
             <button class="qty-sel-up" type="button">+</button>
         </div>
         <button class="btn-add" data-id="${p.id}" data-name="${p.name}" data-price="${p.price}" data-image="${p.image}">Añadir al carrito</button>
+        <button class="share-btn" data-name="${p.name}" data-url="${window.location.href.split('?')[0].split('#')[0]}">Compartir</button>
     `;
     modal.classList.add('active');
     overlay.classList.add('active');
@@ -518,6 +519,32 @@ function openProductModal(id) {
         playSound('cart');
         showToast(`${this.dataset.name} añadido (${qty} kg)`);
         closeProductModal();
+    });
+    content.querySelector('.share-btn').addEventListener('click', function () {
+        const name = this.dataset.name;
+        const url = this.dataset.url;
+        const text = `🍊 ${name} - Frutería Fresh`;
+        if (navigator.share) {
+            navigator.share({ title: name, text, url }).catch(() => {});
+        } else {
+            const w = window.open('', '_blank', 'width=400,height=500');
+            w.document.write(`
+                <html><head><title>Compartir</title>
+                <meta name="viewport" content="width=device-width,initial-scale=1">
+                <style>body{font-family:sans-serif;padding:2rem;text-align:center}
+                a{display:block;margin:1rem 0;padding:1rem;border-radius:12px;text-decoration:none;font-weight:600;color:#fff}
+                .wa{background:#25D366}.fb{background:#1877F2}.tw{background:#1DA1F2}.cp{background:#666}
+                input{width:100%;padding:0.75rem;border:2px solid #ddd;border-radius:8px;margin-top:1rem;font-size:0.9rem}
+                </style></head><body>
+                <h3>Compartir ${name}</h3>
+                <a class="wa" href="https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}" target="_blank">WhatsApp</a>
+                <a class="fb" href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}" target="_blank">Facebook</a>
+                <a class="tw" href="https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}" target="_blank">Twitter</a>
+                <input type="text" value="${url}" readonly onclick="this.select()" style="text-align:center">
+                <p style="color:#888;font-size:0.8rem;margin-top:1rem">Copiar enlace</p>
+                </body></html>
+            `);
+        }
     });
 }
 function closeProductModal() {
@@ -553,6 +580,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('dark');
     }
     loadProducts();
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+    }
+
     document.getElementById('productsGrid').addEventListener('click', (e) => {
         const card = e.target.closest('.product-card');
         if (!card) return;
