@@ -17,6 +17,38 @@ function getStockLabel(id) {
     return null;
 }
 
+function playSound(type) {
+    try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        if (type === 'cart') {
+            osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+            osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.08);
+            gain.gain.setValueAtTime(0.25, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+            osc.start(ctx.currentTime);
+            osc.stop(ctx.currentTime + 0.2);
+        } else if (type === 'fav') {
+            osc.frequency.setValueAtTime(440, ctx.currentTime);
+            gain.gain.setValueAtTime(0.2, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+            osc.start(ctx.currentTime);
+            osc.stop(ctx.currentTime + 0.15);
+        } else if (type === 'error') {
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(200, ctx.currentTime);
+            osc.frequency.setValueAtTime(150, ctx.currentTime + 0.15);
+            gain.gain.setValueAtTime(0.2, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+            osc.start(ctx.currentTime);
+            osc.stop(ctx.currentTime + 0.3);
+        }
+    } catch (e) {}
+}
+
 function showToast(msg, type) {
     const container = document.getElementById('toastContainer');
     const toast = document.createElement('div');
@@ -327,6 +359,9 @@ function renderProducts(products) {
             <div class="product-image">
                 <img src="${p.image}" alt="${p.alt}" loading="lazy">
                 ${discount ? `<span class="discount-badge">-${discount}%</span>` : ''}
+                <div class="quick-view-overlay">
+                    <button class="quick-view-btn">Vista rápida</button>
+                </div>
                 <button class="fav-btn ${Fav.has(p.id) ? 'active' : ''}" data-id="${p.id}" aria-label="Favorito">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                 </button>
@@ -400,6 +435,7 @@ function setupAddButtons() {
             const img = card.dataset.image;
             const qty = parseInt(card.querySelector('.qty-sel-input').value) || 1;
             Cart.add(id, name, price, img, qty);
+            playSound('cart');
             showToast(`${name} añadido (${qty} kg)`);
         });
     });
@@ -408,6 +444,7 @@ function setupAddButtons() {
             e.stopPropagation();
             const id = parseInt(this.dataset.id);
             Fav.toggle(id);
+            playSound('fav');
             showToast(Fav.has(id) ? 'Añadido a favoritos' : 'Eliminado de favoritos');
         });
     });
@@ -478,6 +515,7 @@ function openProductModal(id) {
     content.querySelector('.btn-add').addEventListener('click', function () {
         const qty = parseInt(content.querySelector('.qty-sel-input').value) || 1;
         Cart.add(parseInt(this.dataset.id), this.dataset.name, parseFloat(this.dataset.price), this.dataset.image, qty);
+        playSound('cart');
         showToast(`${this.dataset.name} añadido (${qty} kg)`);
         closeProductModal();
     });
@@ -607,6 +645,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     backToTop.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            if (document.getElementById('cartSidebar').classList.contains('active')) toggleCart(false);
+            if (document.getElementById('authModal').classList.contains('active')) toggleAuth(false);
+            if (document.getElementById('ordersModal').classList.contains('active')) toggleOrders(false);
+            if (document.getElementById('productModal').classList.contains('active')) closeProductModal();
+        }
+        if ((e.key === '/' || (e.ctrlKey && e.key === 'k')) && !['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) {
+            e.preventDefault();
+            document.getElementById('searchInput').focus();
+        }
     });
 
     document.getElementById('productModalClose').addEventListener('click', closeProductModal);
